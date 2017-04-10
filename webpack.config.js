@@ -1,8 +1,11 @@
 const { resolve } = require('path');
 const webpack = require('webpack');
 
-module.exports = {
-    context: resolve(__dirname, 'src'),
+const BUILD_DIR = resolve(__dirname, 'dist');
+const APP_DIR = resolve(__dirname, 'src');
+
+let config = {
+    context: APP_DIR,
 
     entry: [
         'react-hot-loader/patch',
@@ -16,14 +19,14 @@ module.exports = {
         // bundle the client for hot reloading
         // only- means to only hot reload for successful updates
 
-        './index.js'
+        './index.jsx'
         // the entry point of our app
     ],
     output: {
         filename: 'bundle.js',
         // the output bundle
 
-        path: resolve(__dirname, 'dist'),
+        path: BUILD_DIR,
 
         publicPath: '/'
         // necessary for HMR to know where to load the hot update chunks
@@ -34,7 +37,7 @@ module.exports = {
         hot: true,
         // enable HMR on the server
 
-        contentBase: resolve(__dirname, 'dist'),
+        contentBase: BUILD_DIR,
         // match the output path
 
         publicPath: '/'
@@ -44,13 +47,14 @@ module.exports = {
     module: {
         rules: [
             {
+                // Tell Webpack to use the babel-loader while bundling the files
                 test: /\.jsx?$/,
-                use: [ 'babel-loader', ],
+                use: [ 'babel-loader'],
                 exclude: /node_modules/
             },
             {
                 test: /\.css$/,
-                use: [ 'style-loader', 'css-loader?modules', 'postcss-loader', ],
+                use: [ 'style-loader', 'css-loader?modules', 'postcss-loader' ],
             },
         ],
     },
@@ -64,3 +68,5 @@ module.exports = {
     ]
 
 };
+
+module.exports = config;
