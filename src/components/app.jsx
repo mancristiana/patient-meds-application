@@ -6,7 +6,7 @@ import React from 'react';
 import styles from './app.less';
 
 export class App extends React.Component {
-    render () {
+    render() {
         return <p className={styles.app}> Hello React!</p>;
     }
 }
