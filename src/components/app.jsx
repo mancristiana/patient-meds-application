@@ -7,6 +7,10 @@ import styles from './app.less';
 
 export class App extends React.Component {
     render() {
-        return <p className={styles.app}> Hello React!</p>;
+        return (
+            <div>
+                <p className={styles.app}>Hello React!</p>
+            </div>
+        )
     }
 }

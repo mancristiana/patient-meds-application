@@ -1,9 +1,9 @@
-@font: helvetica, arial, sans-serif;
-@color: aqua;
+@import '../assets/styles/@variables.less';
+@import '../assets/styles/mixins.less';
+
 .app {
-    text-size-adjust: none;
-    font-family: @font;
-    color: @color;
-    line-height: 200%;
-    padding: 6px 20px 30px;
+    .gradient-bg(75deg, @brand-primary, lighten(@brand-primary, 30%));
+    color: white;
+    font: 200% @font-heading;
+    padding: 1em;
 }
