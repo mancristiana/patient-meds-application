@@ -5,11 +5,14 @@
 import React from 'react';
 import styles from './app.less';
 
+import {PatientStory} from './patient/patient-story.jsx';
+
 export class App extends React.Component {
     render() {
         return (
             <div>
-                <p className={styles.app}>Hello React!</p>
+                <div className={styles.app}>Patient Meds App</div>
+                <PatientStory />
             </div>
         )
     }

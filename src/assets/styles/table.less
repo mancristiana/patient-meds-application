@@ -1,0 +1,47 @@
+@import '@variables';
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    background-color: @gray-lighter;
+    cursor: default;
+    thead {
+        th {
+            text-transform: uppercase;
+            padding: 1em;
+            background-color: white;
+            min-width: 100px;
+            overflow: hidden;
+            border-left: 1px solid @gray;
+            &:first-child {
+                border-left: none !important;
+            }
+        }
+    }
+    tbody {
+        tr {
+            cursor: pointer;
+            td {
+                min-width: 100px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0.6em;
+                border-left: 1px solid @gray;
+                border-top: 1px solid white;
+                border-bottom: 1px solid white;
+                &:first-child {
+                    border-left: none !important;
+                }
+            }
+            &:nth-child(even) {
+                background-color: white;
+            }
+            &:hover {
+                background-color: @brand-primary;
+                color: white;
+            }
+        }
+    }
+}
