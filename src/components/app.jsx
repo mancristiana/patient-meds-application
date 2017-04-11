@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import styles from './app.css';
+import styles from './app.less';
 
 export class App extends React.Component {
     render () {

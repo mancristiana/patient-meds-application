@@ -56,6 +56,10 @@ let config = {
                 test: /\.css$/,
                 use: [ 'style-loader', 'css-loader?modules', 'postcss-loader' ],
             },
+            {
+                test: /\.less$/,
+                use: ['style-loader', 'css-loader?modules', 'less-loader']
+            }
         ],
     },
 
