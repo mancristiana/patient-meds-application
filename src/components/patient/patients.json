@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "firstName": "Superman",
+    "lastName": "Man",
+    "email": "mail1@smth.com",
+    "phone": "12345678",
+    "bdate": "25/09/95"
+  },
+  {
+    "id": 2,
+    "firstName": "Batman",
+    "lastName": "Man",
+    "email": "mail2@smth.com",
+    "phone": "12345678",
+    "bdate": "25/09/91"
+  },
+  {
+    "id": 3,
+    "firstName": "Cristiana",
+    "lastName": "Man",
+    "email": "mail3@smth.com",
+    "phone": "12345678",
+    "bdate": "25/09/90"
+  },
+  {
+    "id": 4,
+    "firstName": "Sansa",
+    "lastName": "Stark",
+    "email": "mail4@smth.com",
+    "phone": "12345678",
+    "bdate": "25/01/71"
+  },
+  {
+    "id": 5,
+    "firstName": "John",
+    "lastName": "Snow",
+    "email": "mail53@smth.com",
+    "phone": "12345678",
+    "bdate": "22/09/05"
+  }
+]

@@ -5,3 +5,9 @@
     background: -moz-linear-gradient(@ang, @color1, @color2); /* For Firefox 3.6 to 15 */
     background: linear-gradient(@ang,  @color1, @color2); /* Standard syntax */
 }
+
+.box-sizing(@attr) {
+    -webkit-box-sizing: @attr;
+    -moz-box-sizing: @attr;
+    box-sizing: @attr;
+}

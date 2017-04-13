@@ -1,0 +1,21 @@
+@import '../../assets/styles/@variables.less';
+
+.story {
+    padding: 1em;
+    display:table;
+    width: 100%;
+    height: 100%;
+
+    .itemsWrapper, .detailsWrapper {
+        display: table-cell;
+    }
+
+    .itemsWrapper {
+        width: 70%;
+    }
+    .detailsWrapper {
+        margin-left: 3em;
+        border-left: 2px solid @brand-primary;
+        width: 30%;
+    }
+}

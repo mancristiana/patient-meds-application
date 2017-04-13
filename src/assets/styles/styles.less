@@ -1,9 +1,14 @@
 @import '@variables';
+@import 'mixins';
 
 * {
     margin: 0;
     padding: 0;
     borders: 0;
+}
+
+*, *:before, *:after {
+    .box-sizing(border-box);
 }
 
 body {
