@@ -54,35 +54,32 @@ let config = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader?modules', 'postcss-loader'],
+                use: ['style-loader', 'css-loader?modules&importLoaders=1'],
             },
             {
                 test: /\.less$/,
-                use: ['style-loader', 'css-loader?modules', 'less-loader']
+                use: [
+                    'style-loader',
+                    'css-loader?modules&importLoaders=1',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: function () {
+                                return [
+                                    require('autoprefixer')
+                                ];
+                            }
+                        }
+                    },
+                    'less-loader'
+                ]
             },
             {
-                test: /\.png$/,
-                loader: "url-loader?limit=100000"
-            },
-            {
-                test: /\.jpg$/,
-                loader: "file-loader"
-            },
-            {
-                test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-            },
-            {
-                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-                loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
-            },
-            {
-                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-                loader: 'file-loader'
-            },
-            {
-                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000
+                }
             }
         ],
     },
