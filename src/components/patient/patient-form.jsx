@@ -6,34 +6,99 @@ import React from "react";
 export class PatientForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            id: props.patient.id || '',
+            firstName: props.patient.firstName || '',
+            lastName:  props.patient.lastName || '',
+            email: props.patient.email || '',
+            phone: props.patient.phone || '',
+            bdate: props.patient.bdate || ''
+        }
     }
 
-    handleChange(event) {
-        this.setState({value: event.target.value});
+    _updateState(props) {
+        this.setState({
+            id: props.patient.id || '',
+            firstName: props.patient.firstName || '',
+            lastName:  props.patient.lastName || '',
+            email: props.patient.email || '',
+            phone: props.patient.phone || '',
+            bdate: props.patient.bdate || ''
+        });
     }
 
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
+    _handleChange(event) {
+        let target = event.target;
+        let value = target.type === 'checkbox' ? target.checked : target.value;
+        let name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+    }
+
+    _handleSubmit(event) {
+        alert('A name was submitted: ' + this.state.firstName);
+        console.log("STATE on submit", this.state);
+        console.log("PROPS on submit", this.props);
         event.preventDefault();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log("COMPONENT WILL RECEIVE PROPS", nextProps);
+        this._updateState(nextProps);
     }
 
 
     render() {
         return (
             <div>
-                <h3>Hello</h3>
-                <p>Form goes here</p>
-                {this.props.patient.firstName}
-                {this.props.patient.lastName}
+                <h3>Patient #{this.state.id} Details</h3>
 
-                <form onSubmit={this._onSubmit.bind(this)}>
+                <form onSubmit={this._handleSubmit.bind(this)}>
                     <label>
                         First Name:
-                        <input type="text" value={this.state.value} onChange={this.handleChange} />
+                        <input
+                            name="firstName"
+                            type="text"
+                            value={this.state.firstName}
+                            onChange={this._handleChange.bind(this)} />
+                    </label>
+
+                    <label>
+                        Last Name:
+                        <input
+                            name="lastName"
+                            type="text"
+                            value={this.state.lastName}
+                            onChange={this._handleChange.bind(this)} />
+                    </label>
+
+                    <label>
+                        Email:
+                        <input
+                            name="email"
+                            type="text"
+                            value={this.state.email}
+                            onChange={this._handleChange.bind(this)} />
+                    </label>
+
+                    <label>
+                        Phone:
+                        <input
+                            name="phone"
+                            type="text"
+                            value={this.state.phone}
+                            onChange={this._handleChange.bind(this)} />
+                    </label>
+
+                    <label>
+                        Birth date:
+                        <input
+                            name="bdate"
+                            type="text"
+                            value={this.state.bdate}
+                            onChange={this._handleChange.bind(this)} />
                     </label>
                     <input type="submit" value="Submit"/>
                 </form>
