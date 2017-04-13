@@ -10,8 +10,8 @@ export class PatientStory extends React.Component {
         super();
 
         this.state = {
-            isSelectedPatient: false,
-            selectedPatient: this._getBlankPatient()
+            isSelectedPatient: true,
+            selectedPatient: this._getPatients()[0]
         };
     }
 
@@ -28,6 +28,13 @@ export class PatientStory extends React.Component {
                     <h1>Patients</h1>
 
                     <table className="table">
+                        <colgroup>
+                            <col className={styles.keyCol} />
+                            <col className={styles.defCol} />
+                            <col className={styles.defCol} />
+                            <col className={styles.defCol} />
+                            <col className={styles.defCol} />
+                        </colgroup>
                         <thead>
                         <tr>
                             {this._getPatientsHeaders().map((header) => <th key={header}>{header}</th>)}
@@ -37,8 +44,7 @@ export class PatientStory extends React.Component {
                         {this._getPatients().map((patient) =>
                             <tr key={patient.id.toString()} onClick={this._handlePatientItemClick.bind(this, patient)}>
                                 <td>{patient.id}</td>
-                                <td>{patient.firstName}</td>
-                                <td>{patient.lastName}</td>
+                                <td>{patient.firstName} {patient.lastName}</td>
                                 <td>{patient.email}</td>
                                 <td>{patient.phone}</td>
                                 <td>{patient.bdate}</td>
@@ -55,7 +61,7 @@ export class PatientStory extends React.Component {
     }
 
     _getPatientsHeaders() {
-        return ["#", "First Name", "Last Name", "Email", "Phone", "Birth Date"];
+        return ["#", "Name", "Email", "Phone", "Birth Date"];
     }
 
     _getPatients() {

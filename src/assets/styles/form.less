@@ -1,0 +1,57 @@
+@import "@variables";
+
+form {
+    max-width: 600px;
+
+    fieldset {
+        border: 0;
+        background-color: @gray-light;
+        padding: 2rem;
+    }
+    legend {
+        font-size: 120%;
+        text-align: center;
+        display: block;
+        width: 100%;
+        padding: 1.5em 0.6em 0.6em;
+        color: white;
+        background-color: @brand-primary;
+    }
+    legend, label, input[type="submit"] {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-family: @font-heading;
+    }
+
+
+    input, textarea {
+        border: 0;
+        outline: 0;
+        padding: 1em;
+        border-radius: 0.6em;
+        display: block;
+        width: 100%;
+        margin: 0.5em 0 1.5em;
+        font-family: @font-paragraph;
+        box-shadow: 3px 3px 3px fade(black, 10%);
+
+        &:focus {
+            box-shadow: 0 0 2px 2px fade(@brand-primary, 50%) !important;
+            border: 1px solid @brand-primary;
+        }
+    }
+
+    input[type="submit"] {
+        color: white;
+        background: @brand-primary;
+        cursor: pointer;
+
+        &:hover {
+            background-color: lighten(@brand-primary, 10%);
+        }
+    }
+
+    textarea {
+        height: 5em;
+    }
+}

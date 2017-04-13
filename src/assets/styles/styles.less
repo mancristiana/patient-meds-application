@@ -1,19 +1,23 @@
 @import '@variables';
 @import 'mixins';
 
+
+html {
+    font: 15px @font-paragraph;
+}
+
 * {
     margin: 0;
     padding: 0;
-    borders: 0;
+    border: 0;
 }
 
 *, *:before, *:after {
-    .box-sizing(border-box);
+    box-sizing: border-box;
 }
 
 body {
     background-color: @bg;
-    font-family: @font-paragraph;
 }
 
 h1, h2, h3, h4, h5, h6 {

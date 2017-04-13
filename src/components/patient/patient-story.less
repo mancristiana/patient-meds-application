@@ -1,21 +1,28 @@
 @import '../../assets/styles/@variables.less';
 
 .story {
-    padding: 1em;
-    display:table;
+    //display:table;
     width: 100%;
     height: 100%;
 
     .itemsWrapper, .detailsWrapper {
-        display: table-cell;
+        //display: table-cell;
+        float:left;
     }
 
     .itemsWrapper {
         width: 70%;
+        padding: 3rem;
     }
     .detailsWrapper {
-        margin-left: 3em;
-        border-left: 2px solid @brand-primary;
         width: 30%;
     }
+}
+
+.keyCol {
+    width: 10%;
+}
+
+.defCol {
+    //width: 22.5%;
 }

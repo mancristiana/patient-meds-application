@@ -9,7 +9,7 @@ export class PatientForm extends React.Component {
         this.state = {
             id: props.patient.id || '',
             firstName: props.patient.firstName || '',
-            lastName:  props.patient.lastName || '',
+            lastName: props.patient.lastName || '',
             email: props.patient.email || '',
             phone: props.patient.phone || '',
             bdate: props.patient.bdate || ''
@@ -20,7 +20,7 @@ export class PatientForm extends React.Component {
         this.setState({
             id: props.patient.id || '',
             firstName: props.patient.firstName || '',
-            lastName:  props.patient.lastName || '',
+            lastName: props.patient.lastName || '',
             email: props.patient.email || '',
             phone: props.patient.phone || '',
             bdate: props.patient.bdate || ''
@@ -53,54 +53,58 @@ export class PatientForm extends React.Component {
     render() {
         return (
             <div>
-                <h3>Patient #{this.state.id} Details</h3>
+
 
                 <form onSubmit={this._handleSubmit.bind(this)}>
-                    <label>
-                        First Name:
-                        <input
-                            name="firstName"
-                            type="text"
-                            value={this.state.firstName}
-                            onChange={this._handleChange.bind(this)} />
-                    </label>
+                    <legend>Patient #{this.state.id} Details</legend>
+                    <fieldset>
 
-                    <label>
-                        Last Name:
-                        <input
-                            name="lastName"
-                            type="text"
-                            value={this.state.lastName}
-                            onChange={this._handleChange.bind(this)} />
-                    </label>
+                        <label>
+                            First Name:
+                            <input
+                                name="firstName"
+                                type="text"
+                                value={this.state.firstName}
+                                onChange={this._handleChange.bind(this)}/>
+                        </label>
 
-                    <label>
-                        Email:
-                        <input
-                            name="email"
-                            type="text"
-                            value={this.state.email}
-                            onChange={this._handleChange.bind(this)} />
-                    </label>
+                        <label>
+                            Last Name:
+                            <input
+                                name="lastName"
+                                type="text"
+                                value={this.state.lastName}
+                                onChange={this._handleChange.bind(this)}/>
+                        </label>
 
-                    <label>
-                        Phone:
-                        <input
-                            name="phone"
-                            type="text"
-                            value={this.state.phone}
-                            onChange={this._handleChange.bind(this)} />
-                    </label>
+                        <label>
+                            Email:
+                            <input
+                                name="email"
+                                type="text"
+                                value={this.state.email}
+                                onChange={this._handleChange.bind(this)}/>
+                        </label>
 
-                    <label>
-                        Birth date:
-                        <input
-                            name="bdate"
-                            type="text"
-                            value={this.state.bdate}
-                            onChange={this._handleChange.bind(this)} />
-                    </label>
-                    <input type="submit" value="Submit"/>
+                        <label>
+                            Phone:
+                            <input
+                                name="phone"
+                                type="text"
+                                value={this.state.phone}
+                                onChange={this._handleChange.bind(this)}/>
+                        </label>
+
+                        <label>
+                            Birth date:
+                            <input
+                                name="bdate"
+                                type="text"
+                                value={this.state.bdate}
+                                onChange={this._handleChange.bind(this)}/>
+                        </label>
+                        <input type="submit" value="Submit"/>
+                    </fieldset>
                 </form>
             </div>
         );
