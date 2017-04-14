@@ -27,7 +27,7 @@ export class PatientForm extends React.Component {
         });
     }
 
-    _handleChange(event) {
+    _onInputChange(event) {
         let target = event.target;
         let value = target.type === 'checkbox' ? target.checked : target.value;
         let name = target.name;
@@ -37,11 +37,9 @@ export class PatientForm extends React.Component {
         });
     }
 
-    _handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.firstName);
-        console.log("STATE on submit", this.state);
-        console.log("PROPS on submit", this.props);
+    _onSubmit(event) {
         event.preventDefault();
+        this.props.onSubmit(this.state);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -55,8 +53,8 @@ export class PatientForm extends React.Component {
             <div>
 
 
-                <form onSubmit={this._handleSubmit.bind(this)}>
-                    <legend>Patient #{this.state.id} Details</legend>
+                <form onSubmit={this._onSubmit.bind(this)}>
+                    <legend>{this.props.legend}</legend>
                     <fieldset>
 
                         <label>
@@ -65,7 +63,7 @@ export class PatientForm extends React.Component {
                                 name="firstName"
                                 type="text"
                                 value={this.state.firstName}
-                                onChange={this._handleChange.bind(this)}/>
+                                onChange={this._onInputChange.bind(this)}/>
                         </label>
 
                         <label>
@@ -74,7 +72,7 @@ export class PatientForm extends React.Component {
                                 name="lastName"
                                 type="text"
                                 value={this.state.lastName}
-                                onChange={this._handleChange.bind(this)}/>
+                                onChange={this._onInputChange.bind(this)}/>
                         </label>
 
                         <label>
@@ -83,7 +81,7 @@ export class PatientForm extends React.Component {
                                 name="email"
                                 type="text"
                                 value={this.state.email}
-                                onChange={this._handleChange.bind(this)}/>
+                                onChange={this._onInputChange.bind(this)}/>
                         </label>
 
                         <label>
@@ -92,7 +90,7 @@ export class PatientForm extends React.Component {
                                 name="phone"
                                 type="text"
                                 value={this.state.phone}
-                                onChange={this._handleChange.bind(this)}/>
+                                onChange={this._onInputChange.bind(this)}/>
                         </label>
 
                         <label>
@@ -101,7 +99,7 @@ export class PatientForm extends React.Component {
                                 name="bdate"
                                 type="text"
                                 value={this.state.bdate}
-                                onChange={this._handleChange.bind(this)}/>
+                                onChange={this._onInputChange.bind(this)}/>
                         </label>
                         <input type="submit" value="Submit"/>
                     </fieldset>

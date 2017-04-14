@@ -10,19 +10,22 @@ export class PatientStory extends React.Component {
     constructor() {
         super();
 
+        let patientList = this._getPatients();
+
         this.state = {
-            isSelectedPatient: true,
-            selectedPatient: this._getPatients()[0]
+            idCount: patientList.length,
+            patientList: patientList,
+            selectedPatient: patientList[0],
+            isNewPatient: false
         };
     }
 
     render() {
         let colHeaders = [];
-        let patientForm;
-        if (this.state.isSelectedPatient) {
-            patientForm = <PatientForm patient={this.state.selectedPatient}/>
+        let detailsLegend = "Patient #" + this.state.selectedPatient.id;
+        if(this.state.isNewPatient) {
+            detailsLegend = "New patient";
         }
-
         return (
             <div className={styles.story}>
                 <div className={styles.itemsWrapper}>
@@ -44,7 +47,7 @@ export class PatientStory extends React.Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this._getPatients().map((patient) =>
+                        {this.state.patientList.map((patient) =>
                             <tr key={patient.id.toString()} onClick={this._handlePatientItemClick.bind(this, patient)}>
                                 <td>{patient.id}</td>
                                 <td>{patient.firstName} {patient.lastName}</td>
@@ -57,7 +60,7 @@ export class PatientStory extends React.Component {
                     </table>
                 </div>
                 <div className={styles.detailsWrapper}>
-                    {patientForm}
+                    <PatientForm patient={this.state.selectedPatient} legend={detailsLegend} onSubmit={this._onCreateNewSubmit.bind(this)} />
                 </div>
             </div>
         );
@@ -84,13 +87,28 @@ export class PatientStory extends React.Component {
 
     _handlePatientItemClick(patient) {
         this.setState({
-            isSelectedPatient: true,
+            isNewPatient: false,
             selectedPatient: patient
         });
         console.log("patient selected", patient);
     }
 
     _onCreateNew() {
-        console.log("new patient will be created");
+        this.setState({
+            isNewPatient: true,
+            selectedPatient: this._getBlankPatient()
+        })
+    }
+
+    _onCreateNewSubmit(patient) {
+        console.log("New patient", patient);
+        patient.id = this.state.idCount + 1;
+        let updatedPatientList = this.state.patientList.slice();
+        updatedPatientList.push(patient);
+        this.setState({
+            idCount: this.state.idCount + 1,
+            patientList: updatedPatientList,
+        });
+
     }
 }
