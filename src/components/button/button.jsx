@@ -13,8 +13,9 @@ export class Button extends React.Component {
 
     render() {
         return (
-            <button className={[styles.btn, this._getBtnStyle()].join(' ')} onClick={this._onButtonClick.bind(this)}>
+            <button className={[styles.btn, this._getBtnStyle(), this._getBtnSize()].join(' ')} onClick={this._onButtonClick.bind(this)}>
                 {this.props.text}
+                {this.props.children}
             </button>
         );
     }
@@ -33,6 +34,13 @@ export class Button extends React.Component {
                 return styles.btnDanger;
             default:
                 return styles.btnDefault;
+        }
+    }
+
+    _getBtnSize() {
+        switch (this.props.size) {
+            case "small": return styles.btnSmall;
+            default: return;
         }
     }
 

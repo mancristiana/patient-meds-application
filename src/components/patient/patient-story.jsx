@@ -54,12 +54,15 @@ export class PatientStory extends React.Component {
                                 <td>{patient.email}</td>
                                 <td>{patient.phone}</td>
                                 <td>{patient.bdate}</td>
-                                <td className={styles.editCol}
-                                    onClick={this._onEdit.bind(this, patient)}>
-                                    <FontAwesome.FaPencil  />
+                                <td>
+                                    <Button type="primary" text="" size="small" onClick={this._onEdit.bind(this, patient)}>
+                                        <FontAwesome.FaPencil  />
+                                    </Button>
                                 </td>
-                                <td className={styles.deleteCol} onClick={this._onDelete.bind(this, patient)}>
-                                    <FontAwesome.FaTrashO />
+                                <td>
+                                    <Button type="danger" text="" size="small" onClick={this._onDelete.bind(this, patient)}>
+                                        <FontAwesome.FaTrashO />
+                                    </Button>
                                 </td>
                             </tr>
                         )}
