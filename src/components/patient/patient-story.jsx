@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './patient-story.less';
 import myData from './patients.json';
 import {PatientForm} from './patient-form.jsx';
+import {Button} from '../button/button.jsx';
 
 
 export class PatientStory extends React.Component {
@@ -26,8 +27,10 @@ export class PatientStory extends React.Component {
             <div className={styles.story}>
                 <div className={styles.itemsWrapper}>
                     <h1>Patients</h1>
-
-                    <table className="table">
+                    <div>
+                        <Button type="primary" text="Create New" onClick={this._onCreateNew.bind(this)} />
+                    </div>
+                    <table>
                         <colgroup>
                             <col className={styles.keyCol} />
                             <col className={styles.defCol} />
@@ -85,5 +88,9 @@ export class PatientStory extends React.Component {
             selectedPatient: patient
         });
         console.log("patient selected", patient);
+    }
+
+    _onCreateNew() {
+        console.log("new patient will be created");
     }
 }

@@ -1,0 +1,34 @@
+@import "../../assets/styles/@variables";
+@import "../../assets/styles/mixins";
+
+//Button styles
+.btnDefault {
+    .buttonVariant(black; @gray-light; @gray-light);
+}
+
+.btnPrimary {
+    .buttonVariant(white; @brand-primary; @brand-primary);
+}
+
+.btnSuccess {
+    .buttonVariant(white; @brand-success; @brand-success);
+}
+
+.btnInfo {
+    .buttonVariant(white; @brand-info; @brand-info);
+}
+
+.btnWarning {
+    .buttonVariant(white; @brand-warning; @brand-warning);
+}
+
+.btnDanger {
+    .buttonVariant(white; @brand-danger; @brand-danger);
+}
+
+.btn {
+    .radiusShadowDefault;
+    .accentText;
+    cursor: pointer;
+    display: inline-block;
+}
