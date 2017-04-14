@@ -23,27 +23,23 @@ export class PatientStory extends React.Component {
     }
 
     render() {
-        let colHeaders = [];
-        let detailsLegend = "Patient #" + this.state.selectedPatient.id;
-        if(this.state.isNewPatient) {
-            detailsLegend = "New patient";
-        }
+
         return (
             <div className={styles.story}>
                 <div className={styles.itemsWrapper}>
                     <h1>Patients</h1>
                     <div>
-                        <Button type="primary" text="Create New" onClick={this._onCreateNew.bind(this)} />
+                        <Button type="primary" text="Create New" onClick={this._onCreate.bind(this)}/>
                     </div>
                     <table>
                         <colgroup>
-                            <col className={styles.keyCol} />
-                            <col className={styles.defCol} />
-                            <col className={styles.defCol} />
-                            <col className={styles.defCol} />
-                            <col className={styles.defCol} />
-                            <col className={styles.keyCol} />
-                            <col className={styles.keyCol} />
+                            <col className={styles.keyCol}/>
+                            <col className={styles.defCol}/>
+                            <col className={styles.defCol}/>
+                            <col className={styles.defCol}/>
+                            <col className={styles.defCol}/>
+                            <col className={styles.keyCol}/>
+                            <col className={styles.keyCol}/>
                         </colgroup>
                         <thead>
                         <tr>
@@ -58,7 +54,8 @@ export class PatientStory extends React.Component {
                                 <td>{patient.email}</td>
                                 <td>{patient.phone}</td>
                                 <td>{patient.bdate}</td>
-                                <td className={styles.editCol} onClick={this._handlePatientItemClick.bind(this, patient)}>
+                                <td className={styles.editCol}
+                                    onClick={this._onEdit.bind(this, patient)}>
                                     <FontAwesome.FaPencil  />
                                 </td>
                                 <td className={styles.deleteCol} onClick={this._onDelete.bind(this, patient)}>
@@ -71,8 +68,8 @@ export class PatientStory extends React.Component {
                 </div>
                 <div className={styles.detailsWrapper}>
                     <PatientForm patient={this.state.selectedPatient}
-                                 legend={detailsLegend}
-                                 onSubmit={this._onDetailsSubmit.bind(this)} />
+                                 legend={this._getDetailsLegend()}
+                                 onSubmit={this._onDetailsSubmit.bind(this)}/>
                 </div>
             </div>
         );
@@ -97,56 +94,45 @@ export class PatientStory extends React.Component {
         };
     }
 
-    _handlePatientItemClick(patient) {
+    _getDetailsLegend() {
+        let detailsLegend = "Patient #" + this.state.selectedPatient.id;
+        if (this.state.isNewPatient) {
+            detailsLegend = "New patient";
+        }
+        return detailsLegend;
+    }
+
+    _onEdit(patient) {
         this.setState({
             isNewPatient: false,
             selectedPatient: patient
         });
-        console.log("patient selected", patient);
     }
 
-    _onCreateNew() {
+    _onEditSubmit(patient) {
+        let updatedPatientList = this.state.patientList.slice();
+        let foundIndex = updatedPatientList.findIndex(p => p.id === patient.id);
+
+        updatedPatientList[foundIndex] = patient;
+
+        this.setState({
+            patientList: updatedPatientList
+        });
+
+    }
+
+    _onCreate() {
         this.setState({
             isNewPatient: true,
             selectedPatient: this._getBlankPatient()
         })
     }
 
-    _onDelete(patient) {
-        if(confirm('Delete the item?')) {
-            console.log("Patient " + patient.firstName + " deleted");
-            if(this.state.selectedPatient === patient) {
-                console.log("SELECTED IS DELETED");
-                this._onCreateNew();
-            }
-
-            let updatedPatientList = this.state.patientList.slice();
-            console.log("PATENT LIST", updatedPatientList);
-            let foundIndex = updatedPatientList.findIndex((p) => {return p.id === patient.id});
-
-            console.log("FOUND INDEX", foundIndex, updatedPatientList[foundIndex]);
-            updatedPatientList.splice(foundIndex, 1);
-            console.log("LIST AFTER SLICE", updatedPatientList);
-
-            this.setState({
-                patientList: updatedPatientList
-            });
-
-        }
-    }
-
-    _onDetailsSubmit(patient) {
-        if(this.state.isNewPatient) {
-            this._onCreateSubmit(patient);
-        } else {
-            this._onEditSubmit(patient);
-        }
-    }
-
     _onCreateSubmit(patient) {
         patient.id = this.state.idCount + 1;
         let updatedPatientList = this.state.patientList.slice();
         updatedPatientList.push(patient);
+
         this.setState({
             idCount: this.state.idCount + 1,
             patientList: updatedPatientList
@@ -154,16 +140,29 @@ export class PatientStory extends React.Component {
 
     }
 
-    _onEditSubmit(patient) {
-        console.log("onEdit", patient);
-        let updatedPatientList = this.state.patientList.slice();
-        let foundIndex = updatedPatientList.findIndex((p) => {return p.id === patient.id});
-        console.log("Patient to edit", updatedPatientList[foundIndex]);
-        updatedPatientList[foundIndex] = patient;
-        console.log("updatedPatientList", updatedPatientList);
-        this.setState({
-            patientList: updatedPatientList
-        });
+    _onDelete(patient) {
+        if (confirm('Delete patient #' + patient.id + '?')) {
 
+            if (this.state.selectedPatient === patient) {
+                this._onCreate();
+            }
+
+            let updatedPatientList = this.state.patientList.slice();
+            let foundIndex = updatedPatientList.findIndex(p => p.id === patient.id);
+            updatedPatientList.splice(foundIndex, 1);
+
+            this.setState({
+                patientList: updatedPatientList
+            });
+        }
     }
+
+    _onDetailsSubmit(patient) {
+        if (this.state.isNewPatient) {
+            this._onCreateSubmit(patient);
+        } else {
+            this._onEditSubmit(patient);
+        }
+    }
+
 }
