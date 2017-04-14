@@ -1,7 +1,39 @@
-.gradient-bg(@ang, @color1, @color2) {
+.gradientBg(@ang, @color1, @color2) {
     background: (@color1 + @color2) / 2; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(@ang, @color1 , @color2); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(@ang, @color1, @color2); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(@ang, @color1, @color2); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(@ang,  @color1, @color2); /* Standard syntax */
+    background: linear-gradient(@ang, @color1, @color2); /* Standard syntax */
+}
+
+.transitionDefault() {
+    transition: all 0.30s ease-in-out;
+}
+
+.boxShadow(@color) {
+    box-shadow: 0.2rem 0.2rem 0.2rem @color;
+}
+
+.radiusShadowDefault() {
+    border-radius: 0.6rem;
+    padding: 1rem;
+    .boxShadow(fade(black, 10%));
+    border: 0;
+}
+
+.accentText() {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: @font-heading;
+}
+
+.buttonVariant(@color; @background; @border) {
+    color: @color;
+    background-color: @background;
+    border-color: @border;
+    .transitionDefault;
+
+    &:hover, &:focus, &:active
+    {
+        color: @color;
+        background-color: lighten(@background, 10%);
+        border-color: darken(@border, 7%);
+    }
 }
