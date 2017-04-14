@@ -43,7 +43,6 @@ export class PatientForm extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("COMPONENT WILL RECEIVE PROPS", nextProps);
         this._updateState(nextProps);
     }
 

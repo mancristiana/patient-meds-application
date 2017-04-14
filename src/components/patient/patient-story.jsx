@@ -60,7 +60,9 @@ export class PatientStory extends React.Component {
                     </table>
                 </div>
                 <div className={styles.detailsWrapper}>
-                    <PatientForm patient={this.state.selectedPatient} legend={detailsLegend} onSubmit={this._onCreateNewSubmit.bind(this)} />
+                    <PatientForm patient={this.state.selectedPatient}
+                                 legend={detailsLegend}
+                                 onSubmit={this._onDetailsSubmit.bind(this)} />
                 </div>
             </div>
         );
@@ -100,14 +102,34 @@ export class PatientStory extends React.Component {
         })
     }
 
-    _onCreateNewSubmit(patient) {
-        console.log("New patient", patient);
+    _onDetailsSubmit(patient) {
+        if(this.state.isNewPatient) {
+            this._onCreateSubmit(patient);
+        } else {
+            this._onEditSubmit(patient);
+        }
+    }
+
+    _onCreateSubmit(patient) {
         patient.id = this.state.idCount + 1;
         let updatedPatientList = this.state.patientList.slice();
         updatedPatientList.push(patient);
         this.setState({
             idCount: this.state.idCount + 1,
-            patientList: updatedPatientList,
+            patientList: updatedPatientList
+        });
+
+    }
+
+    _onEditSubmit(patient) {
+        console.log("onEdit", patient);
+        let updatedPatientList = this.state.patientList.slice();
+        let foundIndex = updatedPatientList.findIndex((p) => {return p.id === patient.id});
+        console.log("Patient to edit", updatedPatientList[foundIndex]);
+        updatedPatientList[foundIndex] = patient;
+        console.log("updatedPatientList", updatedPatientList);
+        this.setState({
+            patientList: updatedPatientList
         });
 
     }
