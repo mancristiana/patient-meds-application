@@ -4,6 +4,8 @@ import myData from './patients.json';
 import {PatientForm} from './patient-form.jsx';
 import {Button} from '../button/button.jsx';
 
+import * as FontAwesome from 'react-icons/lib/fa'
+
 
 export class PatientStory extends React.Component {
 
@@ -40,6 +42,8 @@ export class PatientStory extends React.Component {
                             <col className={styles.defCol} />
                             <col className={styles.defCol} />
                             <col className={styles.defCol} />
+                            <col className={styles.keyCol} />
+                            <col className={styles.keyCol} />
                         </colgroup>
                         <thead>
                         <tr>
@@ -48,12 +52,18 @@ export class PatientStory extends React.Component {
                         </thead>
                         <tbody>
                         {this.state.patientList.map((patient) =>
-                            <tr key={patient.id.toString()} onClick={this._handlePatientItemClick.bind(this, patient)}>
+                            <tr key={patient.id.toString()}>
                                 <td>{patient.id}</td>
                                 <td>{patient.firstName} {patient.lastName}</td>
                                 <td>{patient.email}</td>
                                 <td>{patient.phone}</td>
                                 <td>{patient.bdate}</td>
+                                <td className={styles.editCol} onClick={this._handlePatientItemClick.bind(this, patient)}>
+                                    <FontAwesome.FaPencil  />
+                                </td>
+                                <td className={styles.deleteCol} onClick={this._onDelete.bind(this, patient)}>
+                                    <FontAwesome.FaTrashO />
+                                </td>
                             </tr>
                         )}
                         </tbody>
@@ -69,7 +79,7 @@ export class PatientStory extends React.Component {
     }
 
     _getPatientsHeaders() {
-        return ["#", "Name", "Email", "Phone", "Birth Date"];
+        return ["#", "Name", "Email", "Phone", "Birth Date", "Edit", "Delete"];
     }
 
     _getPatients() {
@@ -100,6 +110,29 @@ export class PatientStory extends React.Component {
             isNewPatient: true,
             selectedPatient: this._getBlankPatient()
         })
+    }
+
+    _onDelete(patient) {
+        if(confirm('Delete the item?')) {
+            console.log("Patient " + patient.firstName + " deleted");
+            if(this.state.selectedPatient === patient) {
+                console.log("SELECTED IS DELETED");
+                this._onCreateNew();
+            }
+
+            let updatedPatientList = this.state.patientList.slice();
+            console.log("PATENT LIST", updatedPatientList);
+            let foundIndex = updatedPatientList.findIndex((p) => {return p.id === patient.id});
+
+            console.log("FOUND INDEX", foundIndex, updatedPatientList[foundIndex]);
+            updatedPatientList.splice(foundIndex, 1);
+            console.log("LIST AFTER SLICE", updatedPatientList);
+
+            this.setState({
+                patientList: updatedPatientList
+            });
+
+        }
     }
 
     _onDetailsSubmit(patient) {
