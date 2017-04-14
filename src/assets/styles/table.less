@@ -38,9 +38,13 @@ table {
             &:nth-child(even) {
                 background-color: white;
             }
+
+            &:nth-child(even):hover {
+                background-color: darken(white, 20%);
+            }
+
             &:hover {
-                background-color: @brand-primary;
-                color: white;
+                background-color: darken(@gray-lighter, 20%);
             }
         }
     }
