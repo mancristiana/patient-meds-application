@@ -8,7 +8,8 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import classNames from 'classnames/bind';
 import styles from './app.less';
 
-import {PatientStory} from './patient/patient-story.jsx';
+import {PatientPage} from './patient/patient-page.jsx';
+import {MedicinePage} from './medicine/medicine-page.jsx';
 
 export class App extends React.Component {
     constructor(props) {
@@ -37,12 +38,13 @@ export class App extends React.Component {
                             })}>
                                 <li><Link to={'/'}>home</Link></li>
                                 <li><Link to={'/patients'}>patients</Link></li>
-                                <li><a href="">medicine</a></li>
+                                <li><Link to={'/medicine'}>medicine</Link></li>
                             </ul>
                         </nav>
                     </div>
                     <Route exact={true} path="/" render={() => (<h1>Welcome</h1>)} />
-                    <Route path="/patients" component={PatientStory}/>
+                    <Route path="/patients" component={PatientPage}/>
+                    <Route path="/medicine" component={MedicinePage}/>
                 </div>
             </Router>
         )
