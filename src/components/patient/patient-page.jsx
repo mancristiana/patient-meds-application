@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './patient-story.less';
+import styles from './patient-page.less';
 import myData from './patients.json';
 import {PatientForm} from './patient-form.jsx';
 import {Button} from '../button/button.jsx';
@@ -7,7 +7,7 @@ import {Button} from '../button/button.jsx';
 import * as FontAwesome from 'react-icons/lib/fa'
 
 
-export class PatientStory extends React.Component {
+export class PatientPage extends React.Component {
 
     constructor() {
         super();
