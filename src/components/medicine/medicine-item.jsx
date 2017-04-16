@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './medicine-item.less';
+import {Button} from '../button/button.jsx';
 
 export class MedicineItem extends React.Component {
     render() {
@@ -32,7 +33,14 @@ export class MedicineItem extends React.Component {
                         {/*<dt>dosis</dt> <dd>{this.props.med.dosis}*/}
                     </dl>
                 </p>
+                <div className={styles.button}>
+                    <Button type="primary" text="Prescribe to ..." onClick={this._onPrescription.bind(this)}/>
+                </div>
             </div>
         );
+    }
+
+    _onPrescription() {
+        console.log("Give med with id = " + this.props.med.id + " to patient");
     }
 }

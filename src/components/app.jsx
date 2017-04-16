@@ -10,6 +10,7 @@ import styles from './app.less';
 
 import {PatientPage} from './patient/patient-page.jsx';
 import {MedicinePage} from './medicine/medicine-page.jsx';
+import {HomePage} from './home/home-page.jsx';
 
 export class App extends React.Component {
     constructor(props) {
@@ -42,7 +43,7 @@ export class App extends React.Component {
                             </ul>
                         </nav>
                     </div>
-                    <Route exact={true} path="/" render={() => (<h1>Welcome</h1>)} />
+                    <Route exact={true} path="/" component={HomePage} />
                     <Route path="/patients" component={PatientPage}/>
                     <Route path="/medicine" component={MedicinePage}/>
                 </div>
