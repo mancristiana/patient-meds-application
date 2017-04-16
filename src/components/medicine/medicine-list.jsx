@@ -1,5 +1,6 @@
 import React from 'react';
 import {MedicineItem} from './medicine-item.jsx';
+import styles from './medicine-list.less';
 
 export class MedicineList extends React.Component {
     constructor(props) {
@@ -8,8 +9,11 @@ export class MedicineList extends React.Component {
 
     render() {
         return (
-            <div>
-                {this.props.meds.map((med) => <MedicineItem key={med.id} id={med.id}/>)}
+            <div className={styles.wrap}>
+                {this.props.meds.map((med) =>
+                    <div className={styles.item}>
+                        <MedicineItem key={med._id} med={med} />
+                    </div>)}
             </div>
         );
     }

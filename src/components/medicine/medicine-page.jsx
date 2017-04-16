@@ -4,6 +4,10 @@ import request from 'superagent';
 import {SearchBar} from './search-bar.jsx';
 import {MedicineList} from './medicine-list.jsx';
 
+import * as FontAwesome from 'react-icons/lib/fa'
+import styles from './medicine-page.less';
+
+
 export class MedicinePage extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +20,8 @@ export class MedicinePage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className={styles.wrap}>
+                <h1><FontAwesome.FaSearch /> Search for medicine</h1>
                 <SearchBar onTermChange={(term) => this._onTermChange.bind(this)(term)}/>
                 <MedicineList meds={this.state.meds}/>
             </div>

@@ -1,0 +1,21 @@
+@import "../../assets/styles/@variables";
+
+.wrap {
+
+}
+
+.item {
+    padding: 1em;
+    display: block;
+    float: left;
+    width: 100%;
+/// 2;
+    @media only screen and (min-width: @size-tablet) {
+        width: 100% / 2;
+    }
+
+    @media only screen and (min-width: @size-desktop) {
+        width: 100% / 3;
+    }
+
+}
