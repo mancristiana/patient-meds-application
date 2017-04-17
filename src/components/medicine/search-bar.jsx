@@ -13,11 +13,15 @@ export class SearchBar extends React.Component {
         this.props.onTermChange(term);
     }
 
+    _onSubmit(event) {
+        event.preventDefault();
+    }
+
     render() {
         return (
             <div>
-                <form>
 
+                <form onSubmit={this._onSubmit.bind(this)}>
                     <label>
                         <input
                             name="term"
