@@ -23,7 +23,7 @@ export class MedicinePage extends React.Component {
             <div className={styles.wrap}>
                 <h1><FontAwesome.FaSearch /> Search for medicine</h1>
                 <SearchBar placeholder="Search..." onTermChange={(term) => this._onTermChange.bind(this)(term)}/>
-                <MedicineList meds={this.state.meds}/>
+                <MedicineList meds={this.state.meds} selectedPatient={this.props.selectedPatient} />
             </div>
         );
     }

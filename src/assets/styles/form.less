@@ -11,6 +11,7 @@ form {
     }
 
     legend {
+        .accentText;
         font-size: 120%;
         text-align: center;
         display: block;
@@ -20,8 +21,10 @@ form {
         background-color: darken(@gray-light, 5%);
     }
 
-    legend, label, input[type="submit"] {
+    label {
         .accentText;
+        font-weight: normal;
+        padding-left: 1em;
     }
 
     input, textarea {
@@ -40,6 +43,7 @@ form {
     }
 
     input[type="submit"], button {
+        .accentText;
         .buttonVariant(white, @brand-primary, @brand-primary);
         cursor: pointer;
     }

@@ -13,7 +13,7 @@ export class MedicineList extends React.Component {
             <div className={styles.wrap}>
                 {this.props.meds.map((med) =>
                     <div className={styles.item}>
-                        <MedicineItem key={med._id} med={med} />
+                        <MedicineItem key={med._id} med={med} selectedPatient={this.props.selectedPatient} />
                     </div>)}
             </div>
         );

@@ -45,7 +45,8 @@ export class PatientsApi {
         request.post(API + '/patients' + '/' + patient.id + '/meds')
             .set('Content-Type', 'application/json')
             .send(JSON.stringify({
-                medId: med.id
+                medId: med.id,
+                medName: med.productName
             }))
             .end(callback);
     }

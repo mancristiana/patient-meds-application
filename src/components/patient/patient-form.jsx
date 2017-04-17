@@ -53,7 +53,7 @@ export class PatientForm extends React.Component {
 
 
                 <form onSubmit={this._onSubmit.bind(this)}>
-                    <legend>{this.props.legend}</legend>
+                    {()=> {if (this.props.legend) return <legend>{this.props.legend}</legend>}}
                     <fieldset>
 
                         <label>

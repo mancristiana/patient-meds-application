@@ -14,14 +14,15 @@ export class PatientPage extends React.Component {
     constructor(props) {
         super(props);
 
+        let isNewPatient = (this.props.selectedPatient) ? false : true;
         this.state = {
             patientList: [],
-            selectedPatient: this._getBlankPatient(),
-            isNewPatient: true
+            selectedPatient: this.props.selectedPatient || this._getBlankPatient(),
+            isNewPatient: isNewPatient
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._getPatients();
     }
 
@@ -32,10 +33,12 @@ export class PatientPage extends React.Component {
                 <div className={styles.itemsWrapper}>
                     <h1>Patients</h1>
 
-                    <SearchBar placeholder="Search through patients" onTermChange={(term) => this._onSearch.bind(this)(term)}/>
                     <div className={styles.createButton}>
                         <Button type="primary" text="Create New" onClick={this._onCreate.bind(this)}/>
                     </div>
+                    <SearchBar placeholder="Search through patients"
+                               onTermChange={(term) => this._onSearch.bind(this)(term)}/>
+
                     <table>
                         <colgroup>
                             <col className={styles.keyCol}/>
@@ -60,12 +63,14 @@ export class PatientPage extends React.Component {
                                 <td>{patient.phone}</td>
                                 <td>{patient.bdate}</td>
                                 <td>
-                                    <Button type="primary" text="" size="small" onClick={this._onEdit.bind(this, patient)}>
+                                    <Button type="primary" text="" size="small"
+                                            onClick={this._onEdit.bind(this, patient)}>
                                         <FontAwesome.FaPencil  />
                                     </Button>
                                 </td>
                                 <td>
-                                    <Button type="danger" text="" size="small" onClick={this._onDelete.bind(this, patient)}>
+                                    <Button type="danger" text="" size="small"
+                                            onClick={this._onDelete.bind(this, patient)}>
                                         <FontAwesome.FaTrashO />
                                     </Button>
                                 </td>
@@ -75,13 +80,14 @@ export class PatientPage extends React.Component {
                     </table>
                 </div>
                 <div className={styles.detailsWrapper}>
+                    <h2 className={styles.headers}>{this._getDetailsLegend()}</h2>
                     <PatientForm patient={this.state.selectedPatient}
-                                 legend={this._getDetailsLegend()}
                                  onSubmit={this._onDetailsSubmit.bind(this)}/>
 
-                    <h3>Medicine</h3>
-                    <p>
-                        {/*{this.state.selectedPatient.meds.map((med) => <div>{med.medId}</div>)}*/}
+
+                    <h2 className={styles.headers}>Medicine</h2>
+                    <p className={styles.meds}>
+                        {this.state.selectedPatient.meds.map((med) => <h3>{med.medName}</h3>)}
                     </p>
                 </div>
             </div>
@@ -89,12 +95,12 @@ export class PatientPage extends React.Component {
     }
 
     _getPatientsHeaders() {
-        return ["#", "Name", "Email", "Phone", "Birth Date", "Edit", "Delete"];
+        return ["#", "Name", "Email", "Phone", "Birth Date", "Select", "Delete"];
     }
 
     _getPatients() {
         let that = this;
-        PatientsApi.getAll(function(err, res) {
+        PatientsApi.getAll(function (err, res) {
             let patientList = JSON.parse(res.text);
 
             that.setState({
@@ -116,7 +122,7 @@ export class PatientPage extends React.Component {
     }
 
     _getDetailsLegend() {
-        let detailsLegend = "Patient #" + this.state.selectedPatient.id;
+        let detailsLegend = "Details";
         if (this.state.isNewPatient) {
             detailsLegend = "New patient";
         }
@@ -124,16 +130,13 @@ export class PatientPage extends React.Component {
     }
 
     _onEdit(patient) {
-        this.setState({
-            isNewPatient: false,
-            selectedPatient: patient
-        });
+        this.props.onSelectedPatientChange(patient);
     }
 
     _onEditSubmit(patient) {
         let that = this;
-        PatientsApi.update(patient, function(err, res) {
-            if(res && res.text) {
+        PatientsApi.update(patient, function (err, res) {
+            if (res && res.text) {
                 let editedPatient = JSON.parse(res.text);
                 that.setState({selectedPatient: editedPatient});
             }
@@ -151,10 +154,10 @@ export class PatientPage extends React.Component {
 
     _onCreateSubmit(patient) {
         let that = this;
-        PatientsApi.create(patient, function(err, res) {
+        PatientsApi.create(patient, function (err, res) {
             console.log("err", err);
             console.log("res", res);
-            if(res && res.text) {
+            if (res && res.text) {
                 let createdPatient = JSON.parse(res.text);
                 that.setState({selectedPatient: createdPatient});
             }
@@ -171,7 +174,7 @@ export class PatientPage extends React.Component {
             }
 
             let that = this;
-            PatientsApi.remove(patient, function(err, res) {
+            PatientsApi.remove(patient, function (err, res) {
                 console.log("err", err);
                 console.log("res", res);
                 that._getPatients();

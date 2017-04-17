@@ -16,7 +16,8 @@ export class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isMenuOn: false
+            isMenuOn: false,
+            selectedPatient: null
         }
     }
 
@@ -43,9 +44,10 @@ export class App extends React.Component {
                             </ul>
                         </nav>
                     </div>
+                    <div className={styles.patientSection}>{this._getSelectedPatient()}</div>
                     <Route exact={true} path="/" component={HomePage} />
-                    <Route path="/patients" component={PatientPage}/>
-                    <Route path="/medicine" component={MedicinePage}/>
+                    <Route path="/patients" component={() => <PatientPage selectedPatient={this.state.selectedPatient} onSelectedPatientChange={(patient) => this._onSelectedPatientChange.bind(this)(patient)} />}/>
+                    <Route path="/medicine" component={() => <MedicinePage selectedPatient={this.state.selectedPatient} />} />
                 </div>
             </Router>
         )
@@ -55,5 +57,23 @@ export class App extends React.Component {
         this.setState({
             isMenuOn: !this.state.isMenuOn
         });
+    }
+
+    _getSelectedPatient() {
+        if(this.state.selectedPatient) {
+            return (
+                <div>
+                    <h1 className={styles.patientName}>{this.state.selectedPatient.firstName} {this.state.selectedPatient.lastName}</h1>
+                    <h2 className={styles.patientId}>ID # {this.state.selectedPatient.id}</h2>
+                </div>
+            );
+        } else {
+            return (<h1 className={styles.patientName}>No selected patient</h1>);
+        }
+    }
+
+    _onSelectedPatientChange(patient) {
+        console.log("on SELECTED PATIENT", patient);
+        this.setState({selectedPatient: patient});
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './medicine-item.less';
 import {Button} from '../button/button.jsx';
-import {PatientsApi} from '../../api/patients-api.js';
+import {PatientsApi} from "../../api/patients-api";
 
 export class MedicineItem extends React.Component {
     render() {
@@ -35,18 +35,24 @@ export class MedicineItem extends React.Component {
                     </dl>
                 </p>
                 <div className={styles.button}>
-                    <Button type="primary" text="Prescribe to ..." onClick={this._onPrescription.bind(this)}/>
+                    <Button type="primary" text="Prescribe" onClick={this._onPrescription.bind(this)} />
                 </div>
             </div>
         );
     }
 
     _onPrescription() {
-        console.log("Give med with id = " + this.props.med.id + " to patient");
-        let patient = {id: 1};
-        PatientsApi.prescribeMed(patient, this.props.med, function(err, res) {
-            if(res && res.text) {
-               console.log("res", res);
+        console.log("Prescribe " + this.props.med.productName + " ID = " + this.props.med.id + " to " + this.props.selectedPatient);
+
+        let patient = this.props.selectedPatient;
+        let med = this.props.med;
+
+        this.props.selectedPatient.meds.push(this.props.med);
+
+        PatientsApi.prescribeMed(patient, med, function (err, res) {
+            alert("Sucessfully prescribed " + med.productName + " to " + patient.firstName + " " + patient.lastName);
+            if (res && res.text) {
+                console.log("res", res);
             }
         });
 
