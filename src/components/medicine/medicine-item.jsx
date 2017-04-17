@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './medicine-item.less';
 import {Button} from '../button/button.jsx';
+import {PatientsApi} from '../../api/patients-api.js';
 
 export class MedicineItem extends React.Component {
     render() {
@@ -42,5 +43,12 @@ export class MedicineItem extends React.Component {
 
     _onPrescription() {
         console.log("Give med with id = " + this.props.med.id + " to patient");
+        let patient = {id: 1};
+        PatientsApi.prescribeMed(patient, this.props.med, function(err, res) {
+            if(res && res.text) {
+               console.log("res", res);
+            }
+        });
+
     }
 }

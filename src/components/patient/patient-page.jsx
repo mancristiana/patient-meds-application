@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './patient-page.less';
 import {PatientForm} from './patient-form.jsx';
+import {SearchBar} from '../searchbar/searchbar.jsx';
 import {Button} from '../button/button.jsx';
 
 import {PatientsApi} from '../../api/patients-api.js';
@@ -14,7 +15,6 @@ export class PatientPage extends React.Component {
         super(props);
 
         this.state = {
-            idCount: 0,
             patientList: [],
             selectedPatient: this._getBlankPatient(),
             isNewPatient: true
@@ -31,6 +31,8 @@ export class PatientPage extends React.Component {
             <div className={styles.story}>
                 <div className={styles.itemsWrapper}>
                     <h1>Patients</h1>
+
+                    <SearchBar placeholder="Search through patients" onTermChange={(term) => this._onSearch.bind(this)(term)}/>
                     <div className={styles.createButton}>
                         <Button type="primary" text="Create New" onClick={this._onCreate.bind(this)}/>
                     </div>
@@ -76,6 +78,11 @@ export class PatientPage extends React.Component {
                     <PatientForm patient={this.state.selectedPatient}
                                  legend={this._getDetailsLegend()}
                                  onSubmit={this._onDetailsSubmit.bind(this)}/>
+
+                    <h3>Medicine</h3>
+                    <p>
+                        {/*{this.state.selectedPatient.meds.map((med) => <div>{med.medId}</div>)}*/}
+                    </p>
                 </div>
             </div>
         );
@@ -91,7 +98,6 @@ export class PatientPage extends React.Component {
             let patientList = JSON.parse(res.text);
 
             that.setState({
-                idCount: patientList.length,
                 patientList: patientList
             });
         });
@@ -103,8 +109,9 @@ export class PatientPage extends React.Component {
             firstName: "",
             lastName: "",
             email: "",
-            phone: "",
-            bdate: ""
+            phone: 0,
+            bdate: "",
+            meds: []
         };
     }
 
@@ -179,6 +186,23 @@ export class PatientPage extends React.Component {
         } else {
             this._onEditSubmit(patient);
         }
+    }
+
+    _onSearch(term) {
+        let that = this;
+        if (term) {
+            console.log("term", term);
+            PatientsApi.search(term, function (err, res) {
+                console.log("SEARCH res", res);
+                let patientList = JSON.parse(res.text);
+                that.setState({
+                    patientList: patientList
+                });
+            });
+        } else {
+            this._getPatients();
+        }
+
     }
 
 }

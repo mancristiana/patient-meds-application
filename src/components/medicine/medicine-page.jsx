@@ -1,7 +1,7 @@
 import React from 'react';
 import request from 'superagent';
 
-import {SearchBar} from './search-bar.jsx';
+import {SearchBar} from '../searchbar/searchbar.jsx';
 import {MedicineList} from './medicine-list.jsx';
 
 import * as FontAwesome from 'react-icons/lib/fa'
@@ -22,7 +22,7 @@ export class MedicinePage extends React.Component {
         return (
             <div className={styles.wrap}>
                 <h1><FontAwesome.FaSearch /> Search for medicine</h1>
-                <SearchBar onTermChange={(term) => this._onTermChange.bind(this)(term)}/>
+                <SearchBar placeholder="Search..." onTermChange={(term) => this._onTermChange.bind(this)(term)}/>
                 <MedicineList meds={this.state.meds}/>
             </div>
         );

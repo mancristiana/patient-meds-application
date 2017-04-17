@@ -87,7 +87,7 @@ export class PatientForm extends React.Component {
                             Phone:
                             <input
                                 name="phone"
-                                type="text"
+                                type="number"
                                 value={this.state.phone}
                                 onChange={this._onInputChange.bind(this)}/>
                         </label>
@@ -96,7 +96,7 @@ export class PatientForm extends React.Component {
                             Birth date:
                             <input
                                 name="bdate"
-                                type="text"
+                                type="date"
                                 value={this.state.bdate}
                                 onChange={this._onInputChange.bind(this)}/>
                         </label>

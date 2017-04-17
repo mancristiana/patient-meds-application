@@ -2,6 +2,7 @@ import React from 'react';
 import {MedicineItem} from './medicine-item.jsx';
 import styles from './medicine-list.less';
 
+
 export class MedicineList extends React.Component {
     constructor(props) {
         super(props);

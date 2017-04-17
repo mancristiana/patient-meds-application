@@ -9,7 +9,6 @@ export class SearchBar extends React.Component {
     _onInputChange(event) {
         let term = event.target.value;
         this.setState({term: term});
-        console.log("on input change", term);
         this.props.onTermChange(term);
     }
 
@@ -26,7 +25,7 @@ export class SearchBar extends React.Component {
                         <input
                             name="term"
                             type="text"
-                            placeholder="Search through medicine"
+                            placeholder={this.props.placeholder}
                             onChange={this._onInputChange.bind(this)}/>
                     </label>
                 </form>

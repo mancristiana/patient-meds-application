@@ -13,6 +13,12 @@ export class PatientsApi {
             .end(callback);
     }
 
+    static search(term, callback) {
+        request.get(API + '/patients')
+            .query({ search: term})
+            .end(callback);
+    }
+
     static create(patient, callback) {
         request.post(API + '/patients')
             .set('Content-Type', 'application/json')
@@ -35,8 +41,13 @@ export class PatientsApi {
             .end(callback);
     }
 
-    // function(err, res){
-    //     console.log("res", res);
-    // }
+    static prescribeMed(patient, med, callback) {
+        request.post(API + '/patients' + '/' + patient.id + '/meds')
+            .set('Content-Type', 'application/json')
+            .send(JSON.stringify({
+                medId: med.id
+            }))
+            .end(callback);
+    }
 
 }
