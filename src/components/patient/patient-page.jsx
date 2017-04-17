@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './patient-page.less';
-import {PatientForm} from './patient-form.jsx';
 import {SearchBar} from '../searchbar/searchbar.jsx';
 import {Button} from '../button/button.jsx';
+import {Form} from '../form/form.jsx';
 
 import {PatientsApi} from '../../api/patients-api.js';
 
@@ -90,7 +90,7 @@ export class PatientPage extends React.Component {
                     }
 
                     <h2 className={styles.headers}>{this._getDetailsLegend()}</h2>
-                    <PatientForm patient={this.state.selectedPatient}
+                    <Form fields={this._getPatientFormFields()}
                                  onSubmit={this._onDetailsSubmit.bind(this)}/>
 
                 </div>
@@ -98,8 +98,44 @@ export class PatientPage extends React.Component {
         );
     }
 
+    _getPatientFormFields() {
+        let patient = this.state.selectedPatient;
+        return [
+            {
+                "name": "firstName",
+                "type": "text",
+                "label": "First Name",
+                "value": patient.firstName || ""
+            },
+            {
+                "name": "lastName",
+                "type": "text",
+                "label": "Last Name",
+                "value": patient.lastName || ""
+            },
+            {
+                "name": "phone",
+                "type": "number",
+                "label": "Phone",
+                "value": patient.phone || ""
+            },
+            {
+                "name": "email",
+                "type": "text",
+                "label": "Email",
+                "value": patient.email || ""
+            },
+            {
+                "name": "bdate",
+                "type": "date",
+                "label": "Date of Birth",
+                "value": patient.bdate || ""
+            }
+        ]
+    }
+
     _getPatientsHeaders() {
-        return ["#", "Name", "Email", "Phone", "Birth Date", "Select", "Delete"];
+        return ["#", "Name", "Email", "Phone", "DOB", "Select", "Delete"];
     }
 
     _getPatients() {
