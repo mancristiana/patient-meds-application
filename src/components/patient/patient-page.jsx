@@ -84,7 +84,7 @@ export class PatientPage extends React.Component {
                     <div>
                         <h2 className={styles.headers}>Medicine</h2>
                         <p className={styles.meds}>
-                            {this.state.selectedPatient.meds.map((med) => <h3>{med.medName}</h3>)}
+                            {this.state.selectedPatient.meds.map((med) => <h3 key={med.medName}>{med.medName}</h3>)}
                         </p>
                     </div>
                     }
@@ -146,6 +146,7 @@ export class PatientPage extends React.Component {
             }
 
             that._getPatients();
+            this.props.onSelectedPatientChange(patient);
         });
     }
 
@@ -179,8 +180,6 @@ export class PatientPage extends React.Component {
 
             let that = this;
             PatientsApi.remove(patient, function (err, res) {
-                console.log("err", err);
-                console.log("res", res);
                 that._getPatients();
             });
 

@@ -25,6 +25,7 @@ export class PatientForm extends React.Component {
             phone: props.patient.phone || '',
             bdate: props.patient.bdate || ''
         });
+
     }
 
     _onInputChange(event) {
