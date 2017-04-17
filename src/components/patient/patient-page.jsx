@@ -80,15 +80,19 @@ export class PatientPage extends React.Component {
                     </table>
                 </div>
                 <div className={styles.detailsWrapper}>
+                    {this.state.selectedPatient.meds.length > 0 &&
+                    <div>
+                        <h2 className={styles.headers}>Medicine</h2>
+                        <p className={styles.meds}>
+                            {this.state.selectedPatient.meds.map((med) => <h3>{med.medName}</h3>)}
+                        </p>
+                    </div>
+                    }
+
                     <h2 className={styles.headers}>{this._getDetailsLegend()}</h2>
                     <PatientForm patient={this.state.selectedPatient}
                                  onSubmit={this._onDetailsSubmit.bind(this)}/>
 
-
-                    <h2 className={styles.headers}>Medicine</h2>
-                    <p className={styles.meds}>
-                        {this.state.selectedPatient.meds.map((med) => <h3>{med.medName}</h3>)}
-                    </p>
                 </div>
             </div>
         );
