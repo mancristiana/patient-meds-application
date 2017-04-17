@@ -38,15 +38,15 @@ export class App extends React.Component {
                             <ul role="navigation" className={cx({
                                 hidden: !this.state.isMenuOn
                             })}>
-                                <li><Link to={'/'}>home</Link></li>
-                                <li><Link to={'/patients'}>patients</Link></li>
+                                <li><Link to={'/home'}>home</Link></li>
+                                <li><Link to={'/'}>patients</Link></li>
                                 <li><Link to={'/medicine'}>medicine</Link></li>
                             </ul>
                         </nav>
                     </div>
                     <div className={styles.patientSection}>{this._getSelectedPatient()}</div>
-                    <Route exact={true} path="/" component={HomePage} />
-                    <Route path="/patients" component={() => <PatientPage selectedPatient={this.state.selectedPatient} onSelectedPatientChange={(patient) => this._onSelectedPatientChange.bind(this)(patient)} />}/>
+                    <Route path="/home" component={HomePage} />
+                    <Route exact={true} path="/" component={() => <PatientPage selectedPatient={this.state.selectedPatient} onSelectedPatientChange={(patient) => this._onSelectedPatientChange.bind(this)(patient)} />}/>
                     <Route path="/medicine" component={() => <MedicinePage selectedPatient={this.state.selectedPatient} />} />
                 </div>
             </Router>
