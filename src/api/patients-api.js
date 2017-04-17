@@ -16,7 +16,7 @@ export class PatientsApi {
     static create(patient, callback) {
         request.post(API + '/patients')
             .set('Content-Type', 'application/json')
-            .send(JSON.parse(patient))
+            .send(JSON.stringify(patient))
             .end(callback);
     }
 
@@ -24,14 +24,14 @@ export class PatientsApi {
     static update(patient, callback) {
         request.put(API + '/patients' + '/' + patient.id)
             .set('Content-Type', 'application/json')
-            .send(JSON.parse(patient))
+            .send(JSON.stringify(patient))
             .end(callback);
     }
 
     static remove(patient, callback) {
         request.delete(API + '/patients' + '/' + patient.id)
             .set('Content-Type', 'application/json')
-            .send(JSON.parse(patient))
+            .send(JSON.stringify(patient))
             .end(callback);
     }
 

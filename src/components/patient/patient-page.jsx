@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './patient-page.less';
-import myData from '../../api/patients.json';
 import {PatientForm} from './patient-form.jsx';
 import {Button} from '../button/button.jsx';
 
@@ -23,17 +22,7 @@ export class PatientPage extends React.Component {
     }
 
     componentWillMount() {
-        let that = this;
-        PatientsApi.getAll(function(err, res) {
-            let patientList = JSON.parse(res.text);
-
-            that.setState({
-                idCount: patientList.length,
-                patientList: patientList
-            });
-        });
-
-
+        this._getPatients();
     }
 
     render() {
@@ -97,7 +86,15 @@ export class PatientPage extends React.Component {
     }
 
     _getPatients() {
-        return myData;
+        let that = this;
+        PatientsApi.getAll(function(err, res) {
+            let patientList = JSON.parse(res.text);
+
+            that.setState({
+                idCount: patientList.length,
+                patientList: patientList
+            });
+        });
     }
 
     _getBlankPatient() {
@@ -127,15 +124,15 @@ export class PatientPage extends React.Component {
     }
 
     _onEditSubmit(patient) {
-        let updatedPatientList = this.state.patientList.slice();
-        let foundIndex = updatedPatientList.findIndex(p => p.id === patient.id);
+        let that = this;
+        PatientsApi.update(patient, function(err, res) {
+            if(res && res.text) {
+                let editedPatient = JSON.parse(res.text);
+                that.setState({selectedPatient: editedPatient});
+            }
 
-        updatedPatientList[foundIndex] = patient;
-
-        this.setState({
-            patientList: updatedPatientList
+            that._getPatients();
         });
-
     }
 
     _onCreate() {
@@ -146,15 +143,17 @@ export class PatientPage extends React.Component {
     }
 
     _onCreateSubmit(patient) {
-        patient.id = this.state.idCount + 1;
-        let updatedPatientList = this.state.patientList.slice();
-        updatedPatientList.push(patient);
+        let that = this;
+        PatientsApi.create(patient, function(err, res) {
+            console.log("err", err);
+            console.log("res", res);
+            if(res && res.text) {
+                let createdPatient = JSON.parse(res.text);
+                that.setState({selectedPatient: createdPatient});
+            }
 
-        this.setState({
-            idCount: this.state.idCount + 1,
-            patientList: updatedPatientList
+            that._getPatients();
         });
-
     }
 
     _onDelete(patient) {
@@ -164,13 +163,13 @@ export class PatientPage extends React.Component {
                 this._onCreate();
             }
 
-            let updatedPatientList = this.state.patientList.slice();
-            let foundIndex = updatedPatientList.findIndex(p => p.id === patient.id);
-            updatedPatientList.splice(foundIndex, 1);
-
-            this.setState({
-                patientList: updatedPatientList
+            let that = this;
+            PatientsApi.remove(patient, function(err, res) {
+                console.log("err", err);
+                console.log("res", res);
+                that._getPatients();
             });
+
         }
     }
 
