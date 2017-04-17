@@ -1,25 +1,39 @@
 import React from 'react';
 import styles from './patient-page.less';
-import myData from './patients.json';
+import myData from '../../api/patients.json';
 import {PatientForm} from './patient-form.jsx';
 import {Button} from '../button/button.jsx';
+
+import {PatientsApi} from '../../api/patients-api.js';
 
 import * as FontAwesome from 'react-icons/lib/fa'
 
 
 export class PatientPage extends React.Component {
 
-    constructor() {
-        super();
-
-        let patientList = this._getPatients();
+    constructor(props) {
+        super(props);
 
         this.state = {
-            idCount: patientList.length,
-            patientList: patientList,
-            selectedPatient: patientList[0],
-            isNewPatient: false
+            idCount: 0,
+            patientList: [],
+            selectedPatient: this._getBlankPatient(),
+            isNewPatient: true
         };
+    }
+
+    componentWillMount() {
+        let that = this;
+        PatientsApi.getAll(function(err, res) {
+            let patientList = JSON.parse(res.text);
+
+            that.setState({
+                idCount: patientList.length,
+                patientList: patientList
+            });
+        });
+
+
     }
 
     render() {
