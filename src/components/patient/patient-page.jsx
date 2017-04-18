@@ -65,7 +65,7 @@ export class PatientPage extends React.Component {
 
                     <h2 className={styles.headers}>{this.getDetailsLegend()}</h2>
                     <Form fields={this.getPatientFormFields()}
-                          onSubmit={this.onDetailsSubmit.bind(this)}/>
+                          onSubmit={(patient) => this.onDetailsSubmit(patient)} />
 
                 </div>
             </div>
@@ -75,6 +75,18 @@ export class PatientPage extends React.Component {
     getPatientFormFields() {
         let patient = this.state.selectedPatient;
         return [
+            {
+                "name": "id",
+                "type": "immutable",
+                "label": "Id",
+                "value": patient.id || ""
+            },
+            {
+                "name": "meds",
+                "type": "immutable",
+                "label": "Meds",
+                "value": patient.meds || ""
+            },
             {
                 "name": "firstName",
                 "type": "text",
@@ -147,12 +159,8 @@ export class PatientPage extends React.Component {
         let that = this;
         PatientsApi.update(patient, function (err, res) {
             if (res && res.text) {
-                let editedPatient = JSON.parse(res.text);
-                that.setState({selectedPatient: editedPatient});
+                that.props.onSelectedPatientChange(patient);
             }
-
-            that.getPatients();
-            this.props.onSelectedPatientChange(patient);
         });
     }
 

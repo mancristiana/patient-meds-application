@@ -10,7 +10,7 @@ export class Form extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-        this.updateState(nextProps);
+        this.setState(this.fieldsToState(nextProps.fields));
     }
 
 
@@ -20,8 +20,8 @@ export class Form extends React.Component {
                 {this.props.legend && <legend>{this.props.legend}</legend>}
                 <fieldset>
 
-                    {this.props.fields.map((field) =>
-                        <label>
+                    {this.props.fields.filter((field) => field.type !== "immutable").map((field, index) =>
+                        <label key={index}>
                             {field.label}
                             <input
                                 name={field.name}
@@ -35,11 +35,6 @@ export class Form extends React.Component {
                 </fieldset>
             </form>
         );
-    }
-
-    updateState(props) {
-        this.setState(this.fieldsToState(props.fields));
-
     }
 
     fieldsToState(fields) {
