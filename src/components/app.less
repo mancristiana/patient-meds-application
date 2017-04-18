@@ -80,16 +80,34 @@ nav ul{
     }
 }
 
-.patientSection {
+.headerSection {
     padding: 0.5rem 3rem;
     background: @gray-light;
+    width: 100%;
+    overflow: auto;
+
+    .titleSection {
+        float: left;
+        width:50%;
+    }
+
+    .patientSection {
+        float: right;
+        width: 50%;
+        text-align: right;
+    }
 
     .patientName {
         font-size: 1.2rem;
     }
+
     .patientId {
         color: @gray;
         font-weight: bold;
         font-size: 0.9rem;
     }
+}
+
+.bodySection {
+    clear: both;
 }

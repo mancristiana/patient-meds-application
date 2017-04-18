@@ -44,13 +44,18 @@ export class App extends React.Component {
                             </ul>
                         </nav>
                     </div>
-                    <div className={styles.patientSection}>{this.getSelectedPatient()}</div>
-                    <Route path="/home" component={HomePage}/>
-                    <Route exact={true} path="/"
-                           component={() => <PatientPage selectedPatient={this.state.selectedPatient}
-                                                         onSelectedPatientChange={(patient) => this.onSelectedPatientChange.bind(this)(patient)}/>}/>
-                    <Route path="/medicine"
-                           component={() => <MedicinePage selectedPatient={this.state.selectedPatient}/>}/>
+                    <div className={styles.headerSection}>
+                        {this.getPageHeader()}
+                        {this.getSelectedPatient()}
+                    </div>
+                    <div className={styles.bodySection}>
+                        <Route path="/home" component={HomePage}/>
+                        <Route exact={true} path="/"
+                               component={() => <PatientPage selectedPatient={this.state.selectedPatient}
+                                                             onSelectedPatientChange={(patient) => this.onSelectedPatientChange.bind(this)(patient)}/>}/>
+                        <Route path="/medicine"
+                               component={() => <MedicinePage selectedPatient={this.state.selectedPatient}/>}/>
+                    </div>
                 </div>
             </Router>
         )
@@ -62,16 +67,39 @@ export class App extends React.Component {
         });
     }
 
+    getPageHeader() {
+        let header;
+        switch (window.location.pathname) {
+            case '/medicine':
+                header = "Medicine";
+                break;
+            case '/home' :
+                header = "Home";
+                break;
+            default:
+                header = "Patients";
+        }
+
+        return (
+            <div className={styles.titleSection}>
+                <h1>{header}</h1>
+            </div>
+        );
+    }
+
     getSelectedPatient() {
         if (this.state.selectedPatient) {
             return (
-                <div>
+                <div className={styles.patientSection}>
                     <h1 className={styles.patientName}>{this.state.selectedPatient.firstName} {this.state.selectedPatient.lastName}</h1>
                     <h2 className={styles.patientId}>ID # {this.state.selectedPatient.id}</h2>
                 </div>
             );
         } else {
-            return (<h1 className={styles.patientName}>No selected patient</h1>);
+            return (
+                <div className={styles.patientSection}>
+                    <h1 className={styles.patientName}>No selected patient</h1>
+                </div>);
         }
     }
 

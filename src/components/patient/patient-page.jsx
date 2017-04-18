@@ -32,7 +32,6 @@ export class PatientPage extends React.Component {
         return (
             <div className={styles.story}>
                 <div className={styles.itemsWrapper}>
-                    <h1>Patients</h1>
 
                     <div className={styles.createButton}>
                         <Button type="primary" text="Create New" onClick={this.onCreate.bind(this)}/>
