@@ -24,9 +24,10 @@ export class MedicinePage extends React.Component {
         return (
             <div className={styles.wrap}>
                 <h1><FontAwesome.FaSearch /> Search for medicine</h1>
-                <SearchBar placeholder="Search..." onTermChange={(term) => this.onTermChange.bind(this)(term)}/>
-
-                <Loading isLoading={this.state.isLoading} />
+                <div className={styles.searchbar}>
+                    <SearchBar placeholder="Search..." onTermChange={(term) => this.onTermChange.bind(this)(term)}/>
+                </div>
+                <Loading isLoading={this.state.isLoading}/>
                 <MedicineList meds={this.state.meds} selectedPatient={this.props.selectedPatient}/>
             </div>
         );

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import styles from './patient-page.less';
+
 
 import {SearchBar} from '../searchbar/searchbar.jsx';
 import {Button} from '../button/button.jsx';
@@ -32,14 +34,17 @@ export class PatientPage extends React.Component {
         return (
             <div className={styles.story}>
                 <div className={styles.itemsWrapper}>
+                    <div className={styles.toolbar}>
 
-                    <div className={styles.createButton}>
-                        <Button type="primary" text="Create New" onClick={this.onCreate.bind(this)}/>
+                        <div className={styles.createButton}>
+                            <Button type="primary" text="Create New" onClick={this.onCreate.bind(this)}/>
+                        </div>
+
+                        <div className={styles.search}>
+                            <SearchBar placeholder="Search..."
+                                       onTermChange={(term) => this.onSearch.bind(this)(term)}/>
+                        </div>
                     </div>
-
-                    <SearchBar placeholder="Search through patients"
-                               onTermChange={(term) => this.onSearch.bind(this)(term)}/>
-
                     <Table
                         cols={this.getPatientTableCols()}
                         rows={this.state.patientList}
@@ -60,7 +65,7 @@ export class PatientPage extends React.Component {
 
                     <h2 className={styles.headers}>{this.getDetailsLegend()}</h2>
                     <Form fields={this.getPatientFormFields()}
-                                 onSubmit={this.onDetailsSubmit.bind(this)}/>
+                          onSubmit={this.onDetailsSubmit.bind(this)}/>
 
                 </div>
             </div>
@@ -105,13 +110,13 @@ export class PatientPage extends React.Component {
 
     getPatientTableCols() {
         return [
-            {name: "id", header:"#", size: "10%"},
-            {name: "firstName", header:"First Name"},
-            {name: "email", header:"Email"},
-            {name: "phone", header:"Phone"},
-            {name: "bdate", header:"DOB"},
-            {name: "edit", header:"Select", size: "10%"},
-            {name: "delete", header:"Delete", size: "10%"}
+            {name: "id", header: "#", size: "10%"},
+            {name: "firstName", header: "First Name"},
+            {name: "email", header: "Email"},
+            {name: "phone", header: "Phone"},
+            {name: "bdate", header: "DOB"},
+            {name: "edit", header: "Select", size: "10%"},
+            {name: "delete", header: "Delete", size: "10%"}
         ]
     }
 

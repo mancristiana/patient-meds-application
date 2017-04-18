@@ -13,7 +13,7 @@
 }
 
 .itemsWrapper {
-    padding: 3rem;
+    padding: 0 3rem 3rem;
 }
 
 .detailsWrapper {
@@ -35,6 +35,28 @@
     }
 }
 
+
+.toolbar {
+    width: 100%;
+    .createButton {
+        padding: 1rem 0;
+        float:right;
+    }
+
+    .search {
+        padding: 1rem 0;
+        float:left;
+        .icon {
+            padding: 0 1rem;
+        }
+    }
+
+    &:after {
+        clear: both;
+    }
+
+}
+
 .headers {
     text-align: center;
     display: block;
@@ -52,9 +74,7 @@
     }
 }
 
-.createButton {
-    margin: 1rem 0;
-}
+
 
 .keyCol {
     width: 10%;

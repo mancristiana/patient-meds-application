@@ -1,4 +1,6 @@
 import React from 'react';
+import styles from './searchbar.less';
+import FaSearch from 'react-icons/lib/fa/search';
 
 export class SearchBar extends React.Component {
     constructor(props) {
@@ -18,18 +20,19 @@ export class SearchBar extends React.Component {
 
     render() {
         return (
-            <div>
-
-                <form onSubmit={this.onSubmit.bind(this)}>
+            <form onSubmit={this.onSubmit.bind(this)}>
+                <div className={styles.searchbar}>
                     <label>
                         <input
                             name="term"
                             type="text"
                             placeholder={this.props.placeholder}
                             onChange={this.onInputChange.bind(this)}/>
+
                     </label>
-                </form>
-            </div>
+                    <div className={styles.icon}><FaSearch /></div>
+                </div>
+            </form>
         );
     }
 }

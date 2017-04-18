@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './form.less';
 
 export class Form extends React.Component {
 
@@ -15,26 +16,24 @@ export class Form extends React.Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.onSubmit.bind(this)}>
-                    {this.props.legend && <legend>{this.props.legend}</legend>}
-                    <fieldset>
+            <form className={styles.form} onSubmit={this.onSubmit.bind(this)}>
+                {this.props.legend && <legend>{this.props.legend}</legend>}
+                <fieldset>
 
-                        {this.props.fields.map((field) =>
-                            <label>
-                                {field.label}
-                                <input
-                                    name={field.name}
-                                    type={field.type}
-                                    value={this.state[field.name]}
-                                    onChange={this.onInputChange.bind(this)}/>
-                            </label>
-                        )}
+                    {this.props.fields.map((field) =>
+                        <label>
+                            {field.label}
+                            <input
+                                name={field.name}
+                                type={field.type}
+                                value={this.state[field.name]}
+                                onChange={this.onInputChange.bind(this)}/>
+                        </label>
+                    )}
 
-                        <input type="submit" value="Submit"/>
-                    </fieldset>
-                </form>
-            </div>
+                    <input type="submit" value="Submit"/>
+                </fieldset>
+            </form>
         );
     }
 
