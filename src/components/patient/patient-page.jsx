@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './patient-page.less';
+
 import {SearchBar} from '../searchbar/searchbar.jsx';
 import {Button} from '../button/button.jsx';
 import {Form} from '../form/form.jsx';
+import {Table} from '../table/table.jsx';
 
 import {PatientsApi} from '../../api/patients-api.js';
-
-import * as FontAwesome from 'react-icons/lib/fa'
 
 
 export class PatientPage extends React.Component {
@@ -15,15 +15,16 @@ export class PatientPage extends React.Component {
         super(props);
 
         let isNewPatient = (this.props.selectedPatient) ? false : true;
+        let selectedPatient = this.props.selectedPatient || PatientsApi.getBlank();
         this.state = {
             patientList: [],
-            selectedPatient: this.props.selectedPatient || this._getBlankPatient(),
+            selectedPatient: selectedPatient,
             isNewPatient: isNewPatient
         };
     }
 
     componentDidMount() {
-        this._getPatients();
+        this.getPatients();
     }
 
     render() {
@@ -34,51 +35,20 @@ export class PatientPage extends React.Component {
                     <h1>Patients</h1>
 
                     <div className={styles.createButton}>
-                        <Button type="primary" text="Create New" onClick={this._onCreate.bind(this)}/>
+                        <Button type="primary" text="Create New" onClick={this.onCreate.bind(this)}/>
                     </div>
-                    <SearchBar placeholder="Search through patients"
-                               onTermChange={(term) => this._onSearch.bind(this)(term)}/>
 
-                    <table>
-                        <colgroup>
-                            <col className={styles.keyCol}/>
-                            <col className={styles.defCol}/>
-                            <col className={styles.defCol}/>
-                            <col className={styles.defCol}/>
-                            <col className={styles.defCol}/>
-                            <col className={styles.keyCol}/>
-                            <col className={styles.keyCol}/>
-                        </colgroup>
-                        <thead>
-                        <tr>
-                            {this._getPatientsHeaders().map((header) => <th key={header}>{header}</th>)}
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {this.state.patientList.map((patient) =>
-                            <tr key={patient.id.toString()}>
-                                <td>{patient.id}</td>
-                                <td>{patient.firstName} {patient.lastName}</td>
-                                <td>{patient.email}</td>
-                                <td>{patient.phone}</td>
-                                <td>{patient.bdate}</td>
-                                <td>
-                                    <Button type="primary" text="" size="small"
-                                            onClick={this._onEdit.bind(this, patient)}>
-                                        <FontAwesome.FaPencil  />
-                                    </Button>
-                                </td>
-                                <td>
-                                    <Button type="danger" text="" size="small"
-                                            onClick={this._onDelete.bind(this, patient)}>
-                                        <FontAwesome.FaTrashO />
-                                    </Button>
-                                </td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
+                    <SearchBar placeholder="Search through patients"
+                               onTermChange={(term) => this.onSearch.bind(this)(term)}/>
+
+                    <Table
+                        cols={this.getPatientTableCols()}
+                        rows={this.state.patientList}
+                        onEdit={(row) => this.onEdit.bind(this, row)}
+                        onDelete={(row) => this.onDelete.bind(this, row)}/>
+
                 </div>
+
                 <div className={styles.detailsWrapper}>
                     {this.state.selectedPatient.meds.length > 0 &&
                     <div>
@@ -89,16 +59,16 @@ export class PatientPage extends React.Component {
                     </div>
                     }
 
-                    <h2 className={styles.headers}>{this._getDetailsLegend()}</h2>
-                    <Form fields={this._getPatientFormFields()}
-                                 onSubmit={this._onDetailsSubmit.bind(this)}/>
+                    <h2 className={styles.headers}>{this.getDetailsLegend()}</h2>
+                    <Form fields={this.getPatientFormFields()}
+                                 onSubmit={this.onDetailsSubmit.bind(this)}/>
 
                 </div>
             </div>
         );
     }
 
-    _getPatientFormFields() {
+    getPatientFormFields() {
         let patient = this.state.selectedPatient;
         return [
             {
@@ -134,11 +104,19 @@ export class PatientPage extends React.Component {
         ]
     }
 
-    _getPatientsHeaders() {
-        return ["#", "Name", "Email", "Phone", "DOB", "Select", "Delete"];
+    getPatientTableCols() {
+        return [
+            {name: "id", header:"#", size: "10%"},
+            {name: "firstName", header:"First Name"},
+            {name: "email", header:"Email"},
+            {name: "phone", header:"Phone"},
+            {name: "bdate", header:"DOB"},
+            {name: "edit", header:"Select", size: "10%"},
+            {name: "delete", header:"Delete", size: "10%"}
+        ]
     }
 
-    _getPatients() {
+    getPatients() {
         let that = this;
         PatientsApi.getAll(function (err, res) {
             let patientList = JSON.parse(res.text);
@@ -149,31 +127,19 @@ export class PatientPage extends React.Component {
         });
     }
 
-    _getBlankPatient() {
-        return {
-            id: 0,
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: 0,
-            bdate: "",
-            meds: []
-        };
-    }
-
-    _getDetailsLegend() {
-        let detailsLegend = "Details";
+    getDetailsLegend() {
+        let detailsLegend = "Edit details";
         if (this.state.isNewPatient) {
             detailsLegend = "New patient";
         }
         return detailsLegend;
     }
 
-    _onEdit(patient) {
+    onEdit(patient) {
         this.props.onSelectedPatientChange(patient);
     }
 
-    _onEditSubmit(patient) {
+    onEditSubmit(patient) {
         let that = this;
         PatientsApi.update(patient, function (err, res) {
             if (res && res.text) {
@@ -181,68 +147,64 @@ export class PatientPage extends React.Component {
                 that.setState({selectedPatient: editedPatient});
             }
 
-            that._getPatients();
+            that.getPatients();
             this.props.onSelectedPatientChange(patient);
         });
     }
 
-    _onCreate() {
+    onCreate() {
         this.setState({
             isNewPatient: true,
-            selectedPatient: this._getBlankPatient()
+            selectedPatient: this.getBlankPatient()
         })
     }
 
-    _onCreateSubmit(patient) {
+    onCreateSubmit(patient) {
         let that = this;
         PatientsApi.create(patient, function (err, res) {
-            console.log("err", err);
-            console.log("res", res);
             if (res && res.text) {
                 let createdPatient = JSON.parse(res.text);
                 that.setState({selectedPatient: createdPatient});
             }
 
-            that._getPatients();
+            that.getPatients();
         });
     }
 
-    _onDelete(patient) {
+    onDelete(patient) {
         if (confirm('Delete patient #' + patient.id + '?')) {
 
             if (this.state.selectedPatient === patient) {
-                this._onCreate();
+                this.onCreate();
             }
 
             let that = this;
             PatientsApi.remove(patient, function (err, res) {
-                that._getPatients();
+                that.getPatients();
             });
 
         }
     }
 
-    _onDetailsSubmit(patient) {
+    onDetailsSubmit(patient) {
         if (this.state.isNewPatient) {
-            this._onCreateSubmit(patient);
+            this.onCreateSubmit(patient);
         } else {
-            this._onEditSubmit(patient);
+            this.onEditSubmit(patient);
         }
     }
 
-    _onSearch(term) {
+    onSearch(term) {
         let that = this;
         if (term) {
-            console.log("term", term);
             PatientsApi.search(term, function (err, res) {
-                console.log("SEARCH res", res);
                 let patientList = JSON.parse(res.text);
                 that.setState({
                     patientList: patientList
                 });
             });
         } else {
-            this._getPatients();
+            this.getPatients();
         }
 
     }

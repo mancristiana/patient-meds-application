@@ -6,13 +6,13 @@ export class SearchBar extends React.Component {
         this.state = {term: ''}
     }
 
-    _onInputChange(event) {
+    onInputChange(event) {
         let term = event.target.value;
         this.setState({term: term});
         this.props.onTermChange(term);
     }
 
-    _onSubmit(event) {
+    onSubmit(event) {
         event.preventDefault();
     }
 
@@ -20,13 +20,13 @@ export class SearchBar extends React.Component {
         return (
             <div>
 
-                <form onSubmit={this._onSubmit.bind(this)}>
+                <form onSubmit={this.onSubmit.bind(this)}>
                     <label>
                         <input
                             name="term"
                             type="text"
                             placeholder={this.props.placeholder}
-                            onChange={this._onInputChange.bind(this)}/>
+                            onChange={this.onInputChange.bind(this)}/>
                     </label>
                 </form>
             </div>

@@ -29,12 +29,12 @@ export class App extends React.Component {
                     <div className={cx({menuSection: true, on: this.state.isMenuOn})}>
                         Patient Meds App
                         <div className={cx({menuToggle: true, on: this.state.isMenuOn})}
-                             onClick={this._onMenuToggle.bind(this)}>
+                             onClick={this.onMenuToggle.bind(this)}>
                             <div className={styles.one}></div>
                             <div className={styles.two}></div>
                             <div className={styles.three}></div>
                         </div>
-                        <nav onClick={this._onMenuToggle.bind(this)}>
+                        <nav onClick={this.onMenuToggle.bind(this)}>
                             <ul role="navigation" className={cx({
                                 hidden: !this.state.isMenuOn
                             })}>
@@ -44,23 +44,26 @@ export class App extends React.Component {
                             </ul>
                         </nav>
                     </div>
-                    <div className={styles.patientSection}>{this._getSelectedPatient()}</div>
-                    <Route path="/home" component={HomePage} />
-                    <Route exact={true} path="/" component={() => <PatientPage selectedPatient={this.state.selectedPatient} onSelectedPatientChange={(patient) => this._onSelectedPatientChange.bind(this)(patient)} />}/>
-                    <Route path="/medicine" component={() => <MedicinePage selectedPatient={this.state.selectedPatient} />} />
+                    <div className={styles.patientSection}>{this.getSelectedPatient()}</div>
+                    <Route path="/home" component={HomePage}/>
+                    <Route exact={true} path="/"
+                           component={() => <PatientPage selectedPatient={this.state.selectedPatient}
+                                                         onSelectedPatientChange={(patient) => this.onSelectedPatientChange.bind(this)(patient)}/>}/>
+                    <Route path="/medicine"
+                           component={() => <MedicinePage selectedPatient={this.state.selectedPatient}/>}/>
                 </div>
             </Router>
         )
     }
 
-    _onMenuToggle() {
+    onMenuToggle() {
         this.setState({
             isMenuOn: !this.state.isMenuOn
         });
     }
 
-    _getSelectedPatient() {
-        if(this.state.selectedPatient) {
+    getSelectedPatient() {
+        if (this.state.selectedPatient) {
             return (
                 <div>
                     <h1 className={styles.patientName}>{this.state.selectedPatient.firstName} {this.state.selectedPatient.lastName}</h1>
@@ -72,8 +75,7 @@ export class App extends React.Component {
         }
     }
 
-    _onSelectedPatientChange(patient) {
-        console.log("on SELECTED PATIENT", patient);
+    onSelectedPatientChange(patient) {
         this.setState({selectedPatient: patient});
     }
 }

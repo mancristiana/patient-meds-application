@@ -35,13 +35,13 @@ export class MedicineItem extends React.Component {
                     </dl>
                 </p>
                 <div className={styles.button}>
-                    <Button type="primary" text="Prescribe" onClick={this._onPrescription.bind(this)} />
+                    <Button type="primary" text="Prescribe" onClick={this.onPrescription.bind(this)} />
                 </div>
             </div>
         );
     }
 
-    _onPrescription() {
+    onPrescription() {
         console.log("Prescribe " + this.props.med.productName + " ID = " + this.props.med.id + " to " + this.props.selectedPatient);
 
         let patient = this.props.selectedPatient;

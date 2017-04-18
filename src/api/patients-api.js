@@ -8,6 +8,18 @@ export class PatientsApi {
             .end(callback);
     }
 
+    static getBlank() {
+        return {
+            id: 0,
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: 0,
+            bdate: "",
+            meds: []
+        };
+    }
+
     static getAll(callback) {
         request.get(API + '/patients')
             .end(callback);
@@ -15,7 +27,7 @@ export class PatientsApi {
 
     static search(term, callback) {
         request.get(API + '/patients')
-            .query({ search: term})
+            .query({search: term})
             .end(callback);
     }
 

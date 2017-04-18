@@ -22,13 +22,13 @@ export class MedicinePage extends React.Component {
         return (
             <div className={styles.wrap}>
                 <h1><FontAwesome.FaSearch /> Search for medicine</h1>
-                <SearchBar placeholder="Search..." onTermChange={(term) => this._onTermChange.bind(this)(term)}/>
+                <SearchBar placeholder="Search..." onTermChange={(term) => this.onTermChange.bind(this)(term)}/>
                 <MedicineList meds={this.state.meds} selectedPatient={this.props.selectedPatient} />
             </div>
         );
     }
 
-    _onTermChange(term) {
+    onTermChange(term) {
         console.log(term);
         console.log("ON TERM CHANGE");
 
