@@ -1,0 +1,28 @@
+.loading {
+    text-align: center;
+}
+
+.spin {
+    animation: rotate-forever 2s linear infinite;
+    font-size: 2em;
+    width: 1em;
+    height: 1em;
+
+    .icon {
+        position: relative;
+        top: -2px;
+    }
+}
+
+.rotate() {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate-forever {
+    .rotate();
+}
