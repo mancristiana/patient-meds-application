@@ -11,9 +11,9 @@ export class MedicineList extends React.Component {
     render() {
         return (
             <div className={styles.wrap}>
-                {this.props.meds.map((med) =>
-                    <div className={styles.item}>
-                        <MedicineItem key={med._id} med={med} selectedPatient={this.props.selectedPatient} />
+                {this.props.meds.map((med, index) =>
+                    <div key={index} className={styles.item}>
+                        <MedicineItem med={med} selectedPatient={this.props.selectedPatient} />
                     </div>)}
             </div>
         );

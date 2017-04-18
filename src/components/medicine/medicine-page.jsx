@@ -27,7 +27,9 @@ export class MedicinePage extends React.Component {
                 <div className={styles.searchbar}>
                     <SearchBar placeholder="Search..." onTermChange={(term) => this.onTermChange.bind(this)(term)}/>
                 </div>
-                <Loading isLoading={this.state.isLoading}/>
+                {this.state.isLoading &&
+                <Loading />
+                }
                 <MedicineList meds={this.state.meds} selectedPatient={this.props.selectedPatient}/>
             </div>
         );
@@ -38,14 +40,19 @@ export class MedicinePage extends React.Component {
             this.setState({
                 isLoading: true
             });
+            console.log("TERM", term);
+            console.log("ON TERM CHANGE STATE", this.state);
 
             let that = this;
             MedicineApi.search(term, function (err, res) {
+
                 let meds = res.body;
                 that.setState({
                     meds: meds,
                     isLoading: false
                 });
+
+
             });
 
         } else {
