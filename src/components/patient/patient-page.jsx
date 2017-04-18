@@ -53,9 +53,9 @@ export class PatientPage extends React.Component {
                     {this.state.selectedPatient.meds.length > 0 &&
                     <div>
                         <h2 className={styles.headers}>Medicine</h2>
-                        <p className={styles.meds}>
-                            {this.state.selectedPatient.meds.map((med) => <h3 key={med.medName}>{med.medName}</h3>)}
-                        </p>
+                        <ul className={styles.meds}>
+                            {this.state.selectedPatient.meds.map((med, index) => <li key={index}>{med.medName}</li>)}
+                        </ul>
                     </div>
                     }
 
@@ -155,7 +155,7 @@ export class PatientPage extends React.Component {
     onCreate() {
         this.setState({
             isNewPatient: true,
-            selectedPatient: this.getBlankPatient()
+            selectedPatient: PatientsApi.getBlank()
         })
     }
 

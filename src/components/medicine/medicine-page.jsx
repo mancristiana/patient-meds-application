@@ -1,11 +1,13 @@
 import React from 'react';
-import request from 'superagent';
 
 import {SearchBar} from '../searchbar/searchbar.jsx';
 import {MedicineList} from './medicine-list.jsx';
+import {Loading} from '../loading/loading.jsx';
+
 
 import * as FontAwesome from 'react-icons/lib/fa'
 import styles from './medicine-page.less';
+import {MedicineApi} from "../../api/medicine-api";
 
 
 export class MedicinePage extends React.Component {
@@ -14,7 +16,7 @@ export class MedicinePage extends React.Component {
 
         this.state = {
             meds: [],
-            x: ""
+            isLoading: false
         }
     }
 
@@ -23,29 +25,30 @@ export class MedicinePage extends React.Component {
             <div className={styles.wrap}>
                 <h1><FontAwesome.FaSearch /> Search for medicine</h1>
                 <SearchBar placeholder="Search..." onTermChange={(term) => this.onTermChange.bind(this)(term)}/>
-                <MedicineList meds={this.state.meds} selectedPatient={this.props.selectedPatient} />
+
+                <Loading isLoading={this.state.isLoading} />
+                <MedicineList meds={this.state.meds} selectedPatient={this.props.selectedPatient}/>
             </div>
         );
     }
 
     onTermChange(term) {
-        console.log(term);
-        console.log("ON TERM CHANGE");
-
-        let that = this;
-
         if (term) {
-            console.log("TERM CHANGE", term);
-            const url = `https://fest-searcher.herokuapp.com/api/fest/s/${term}`;
-
-
-            request.get(url, function (err, res) {
-                that.setState({meds: res.body});
-                console.log("STATE", that.state.meds);
+            this.setState({
+                isLoading: true
             });
+
+            let that = this;
+            MedicineApi.search(term, function (err, res) {
+                let meds = res.body;
+                that.setState({
+                    meds: meds,
+                    isLoading: false
+                });
+            });
+
         } else {
             this.setState({meds: []});
-            console.log("NO TERM", this.state.meds);
         }
 
     }
